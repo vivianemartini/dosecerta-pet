@@ -414,7 +414,7 @@ function sheet(html, bind, pet) {
   document.body.appendChild(sc);
   sc.querySelectorAll('[data-close]').forEach(b => b.onclick = close);
   bind?.(sc.querySelector('.sheet'), close);
-  sc.querySelector('input,button')?.focus({ preventScroll: true });
+  (sc.querySelector('[data-focus]') || sc.querySelector('input,button'))?.focus({ preventScroll: true });
 }
 const findSlot = key => {
   const [medId, date] = key.split('|');
@@ -432,7 +432,7 @@ function giveSheet(key, skip = false) {
     ${s.med.notes ? `<p class="sub">${esc(s.med.notes)}</p>` : ''}
     <label class="f" for="note">Observação (opcional)</label>
     <input class="input" id="note" maxlength="140" placeholder="${skip ? 'ex.: a veterinária mandou pular' : 'ex.: deu escondido no patê'}">
-    <button class="btn" id="ok">${skip ? 'Confirmar que não foi dada' : past ? 'Sim, foi dada' : 'Sim, dei agora'}</button>
+    <button class="btn" id="ok" data-focus>${skip ? 'Confirmar que não foi dada' : past ? 'Sim, foi dada' : 'Sim, dei agora'}</button>
     <button class="btn ghost" data-close>Cancelar</button>`, (el, close) => {
     el.querySelector('#ok').onclick = async e => {
       e.target.disabled = true; e.target.textContent = 'Salvando…';
